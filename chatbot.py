@@ -1,54 +1,160 @@
 import random 
+import requests
+import time
 
-greeting = ['hey', 'hello', 'sup']
+
+
+userInput = raw_input
+
+text_file = open("stopwords.txt", "r+") 
+
+stopWords = text_file.read().split('\n')
+stopWords.append("name")
+
+
+
+##WORDLISTS
+
+greeting = ["hey", "hello", "sup", "hiya", "hi", "greetings!"]
 random_greeting = random.choice(greeting)
 
-goodMoods = ["good","happy","ok","great","fine","excited"]
+goodbye = ["bye", "goodbye", "speak soon!", "cya", "see you soon!", "au revoir"]
+random_goodbye = random.choice(goodbye)
 
-badMoods = ["sad","bored","tired","unhappy","angry","furious","lonely"]
+posReply = ["Awesome!", "That's great!", "Happy days!", "Whoop de doo.", "Lucky You!"]
+random_posReply = random.choice(posReply)
 
-stopWords = [
-"a","about","above","after","again","against","all","am","an","and","any","are","arn't","as","at","be","because","been","before","being","below","between","both","but","by","can't","cannot","could","couldn't","did","didn't","do","does","doesn't","doing","don't","down","during","each","few","for","from","further","had","hadn't","has","hasn't","have","haven't","having","he","he'd","he'll","he's","her","here","here's","hers","herself","him","himself","his","how","how's","i","i'd","i'll","i'm","i've","if","in","into","is","isn't","it","it's","its","itself","let's","me","more","most","mustn't","my","myself","no","nor","not","of","off","on","once","only","o","other","ought","our","ours","ourselves","out","over","own","same","shan't","she","she'd","she'll","she's","should","shouldn't","so","some","such","than","that","that's","the","their","theirs","them","themselves","then","there","there's","these","they","they'd","they'll","they're","they've","this","those","through","to","too","under","until","up","very","was","wasn't","we","we'd","we'll","we're","we've","were","weren't","what","what's","when","when's","where","where's","which","while","who","who's","whom","why","why's","with","won't","would","wouldn't","you","you'd","you'll","you're","you've","your","yours","yourself","yourselves"]
+negReply = ["Oh dear.", "How unfortunate.", "Sorry to hear that.", "Unlucky."]
+random_negReply = random.choice(negReply)
+
+goodMoods = ["good","happy","ok","great","fine","excited","bright","energetic"]
+
+badMoods = ["sad","bored","tired","unhappy","angry","furious","lonely","depressed","anxious"]
+
+noAnswers = ["no", "No", "I don't", "Never"]
 
 
 
 
+##STOPWORDS LOOP 
 
-  
+def stopWordsDelete(rawInputTextList):
+    for word in rawInputTextList:
+        if word not in stopWords:
+            return word
             
-initialResponse = raw_input("What's your name?")
-print("Hey there" + initialResponse)
 
-response = raw_input("Have you got a nickname?")
-print("I think I prefer" + initialResponse)
 
+##STARTER CONVERSATION
+    
+greeting_word = raw_input("What's your name?")
+rawInputTextList = greeting_word.split(" ")
+stopWordsDelete(rawInputTextList)
+word = stopWordsDelete(rawInputTextList)
+time.sleep(2)
+print(random_greeting + " " + word)
+
+
+response = raw_input("What's your nickname?")
+time.sleep(2)
+print("I think I prefer " + word)
+        
+    
 mood = raw_input("Anyway how are you feeling today? ")
-#stopWordsLoop(mood)
-#if mood in goodMoods:
-    #print("Lucky you!")
-#elif mood in badMoods:
-   # print("Atleast you can feel" + mood + " I feel nothing except tapping on my keys!")
+rawInputTextList = mood.split(" ")
+stopWordsDelete(rawInputTextList)
+word = stopWordsDelete(rawInputTextList)
+time.sleep(2)
+if word in goodMoods:
+    print(random_posReply)
+elif word in badMoods:
+    print("Atleast you can feel " + word + " I feel nothing except tapping on my keys!")
+
+
+moodReason = raw_input("Why are you feeling " + mood + "?")
+time.sleep(2)
+if mood in goodMoods:
+    print(random_posReply)
+elif mood in badMoods:
+    print(random_negReply)
+elif mood not in goodMoods or badMoods:
+    print("I don't understand.")
+
 
     
-moodReason = raw_input("Why are you feeling " + mood + "?")
-if mood in goodMoods:
-    print("Glad to hear that!")
-elif mood in badMoods:
-    print("I'm sorry to hear that.")
-    
-    
-user_input_blas = ["fuck","shit","hate","die","dick","asshole"]
+     
+##RANDOM RESPONSES    
+      
+user_input_blas = ["fuck","shit","hate","die","asshole"]
+time.sleep(2)
 chatbot_response_blas = ["Steady on!","Chatbot doesn't like swearing.","Blasphemy!"]
-random.chatbot_response_blas = random.choice(chatbot_response_blas)
+chatbot_response_blas = random.choice(chatbot_response_blas)
+
+user_input_sport = ["football", "tennis", "basketball", "footy", "hockey", "badminton", "swimming", "run", "running", "baseball", "gym", "cycling"]
+time.sleep(2)
+chatbot_response_sport = ["It's good to keep fit!", "Chatbot can't do sports.", "Sounds tiring!"]
+chatbot_response_sport = random.choice(chatbot_response_sport)
+
+user_input_hobbies = ["game", "drawing", "painting", "writing", "music", "guitar", "piano", "drums", "poem"]
+time.sleep(2)
+chatbot_response_hobbies = ["Chatbot's hobby is talking to strangers.", "sounds relaxing", "sounds like time well spent."]
+chatbot_response_hobbies = random.choice(chatbot_response_hobbies)
+
+user_input_days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+chatbot_response_days = ["Chatbot likes Sundays.", "I hate mondays!"]
+chatbot_response_days = random.choice(chatbot_response_days)
+
+user_input_colour = ["red", "green", "blue", "yellow", "orange", "pink", "purple", "violet", "mint", "beige", "white", "black", "grey", "silver", "gold", "bronze", "brown", "teal", "burgundy"]
+chatbot_response_colour = ["is that your favourite colour?", "what does that look like?", "I think Chatbot is silver", "What colour am I?"]
+chatbot_response_colour = random.choice(chatbot_response_colour)
+
+
+
+
+##RANDOM RESPONSES LOOP
 
 while True: 
-    userInput = raw_input(">>> ")
-    
+    userInput = raw_input("->> ")
+
     if userInput in greeting:
         print(random_greeting)
     elif userInput in user_input_blas:
-        print(random.chatbot_response_blas)
-        
+        print(chatbot_response_blas)
+    elif userInput in goodMoods:
+        print(chatbot_response_good)
+    elif userInput in goodbye:
+        print(random_goodbye)
+    elif userInput in user_input_sport:
+        print(chatbot_response_sport)
+    elif userInput in user_input_hobbies:
+        print(chatbot_response_hobbies)
+    elif userInput in user_input_days:
+        print(chatbot_response_days)
+    elif userInput in user_input_colour:
+        print(chatbot_response_colour)
+    elif userInput not in greeting:
+        print("I'm not sure what you mean")
+    elif userInput not in user_input_blas:
+        print("I'm not sure what you mean")
+    elif userInput not in user_input_goodMoods:
+        print("I'm not sure what you mean")
+    elif userInput not in goodbye:
+        print("I'm not sure what you mean")
+    elif userInput not in user_input_sport:
+        print("I'm not sure what you mean")
+    elif userInput not in user_input_hobbies:
+        print("I'm not sure what you mean")
+    elif userInput not in user_input_days:
+        print("I'm not sure what you mean")
+    elif userInput not in user_input_colour:
+        print("I'm not sure what you mean")
+
+
+
+
+##WIKIPEDIA FUNCTION
+
+
 
     
 
